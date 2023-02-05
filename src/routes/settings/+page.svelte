@@ -7,6 +7,7 @@
   import Textfield from '@app/components/Textfield.svelte';
   import SecureTextfield from '@app/components/SecureTextfield.svelte';
   import { type Settings, settingsStore, setSettings } from '@app/models/settings';
+  import { snackbarStore } from '@app/models/ui';
 
   let apiUrlValue: string;
   let apiSecretKeyValue: string;
@@ -23,6 +24,11 @@
 
     // TODO: In app notifications system?
     await setSettings(newSettings);
+
+    snackbarStore.add({
+      type: 'success',
+      message: 'Settings saved!',
+    });
   }
 
   $: if (ready) {
