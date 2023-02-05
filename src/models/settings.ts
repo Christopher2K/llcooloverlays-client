@@ -9,9 +9,10 @@ export type Settings = {
   apiSecretKey: string;
 };
 
-export const settingsStore = readable<Settings | null>(null, (set) => {
+export const settingsStore = readable<Partial<Settings> | null | undefined>(undefined, (set) => {
   persistentStore.get<Settings>(STORE_KEY).then(set);
   persistentStore.onKeyChange<Settings>(STORE_KEY, set);
+  return undefined
 });
 
 export async function setSettings(settings: Settings) {
