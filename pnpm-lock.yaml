@@ -6,6 +6,7 @@ specifiers:
   '@tauri-apps/api': ^1.2.0
   '@tauri-apps/cli': ^1.2.2
   autoprefixer: 10.4.13
+  lucide-svelte: 0.109.0
   postcss: 8.4.21
   prettier: 2.8.3
   prettier-plugin-svelte: 2.9.0
@@ -18,6 +19,7 @@ specifiers:
 
 dependencies:
   '@tauri-apps/api': 1.2.0
+  lucide-svelte: 0.109.0_svelte@3.55.1
 
 devDependencies:
   '@sveltejs/adapter-static': 1.0.0-next.50_@sveltejs+kit@1.3.10
@@ -832,6 +834,14 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /lucide-svelte/0.109.0_svelte@3.55.1:
+    resolution: {integrity: sha512-ScmxLv96uAQtWSuo3nApr0YTni14gfpb3AN8kosI7ZGTGYuH2yJFRsizDksMIwF1n9yPwHzNNKPnk+lnKWdMwg==}
+    peerDependencies:
+      svelte: ^3.49.0
+    dependencies:
+      svelte: 3.55.1
+    dev: false
+
   /magic-string/0.27.0:
     resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==}
     engines: {node: '>=12'}
@@ -1252,7 +1262,6 @@ packages:
   /svelte/3.55.1:
     resolution: {integrity: sha512-S+87/P0Ve67HxKkEV23iCdAh/SX1xiSfjF1HOglno/YTbSTW7RniICMCofWGdJJbdjw3S+0PfFb1JtGfTXE0oQ==}
     engines: {node: '>= 8'}
-    dev: true
 
   /tailwindcss/3.2.4_postcss@8.4.21:
     resolution: {integrity: sha512-AhwtHCKMtR71JgeYDaswmZXhPcW9iuI9Sp2LvZPo9upDZ7231ZJ7eA9RaURbhpXGVlrjX4cFNlB4ieTetEb7hQ==}

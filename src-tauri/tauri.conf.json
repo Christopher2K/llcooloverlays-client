@@ -59,6 +59,7 @@
     },
     "windows": [
       {
+        "url": "/computer",
         "fullscreen": false,
         "height": 600,
         "width": 800,
