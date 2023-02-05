@@ -7,7 +7,7 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "llcooloverlays-client",
+    "productName": "Overlay Control",
     "version": "0.0.0"
   },
   "tauri": {
@@ -33,7 +33,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "dev.christopher2k.streamOverlays",
+      "identifier": "dev.christopher2k.overlayControl",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
