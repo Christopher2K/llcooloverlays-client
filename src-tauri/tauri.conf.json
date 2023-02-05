@@ -33,7 +33,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "dev.christopher2k.streamOverlays",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
