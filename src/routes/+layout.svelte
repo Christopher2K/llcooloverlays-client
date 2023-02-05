@@ -1,7 +1,7 @@
 <script>
-  import "../app.css";
+  import '../app.css';
 </script>
 
-<main>
+<main class="bg-neutral-800 w-[100vw] h-[100vh]">
   <slot />
 </main>

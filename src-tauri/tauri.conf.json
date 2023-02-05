@@ -61,9 +61,11 @@
       {
         "fullscreen": false,
         "height": 600,
-        "resizable": true,
-        "title": "llcooloverlays-client",
-        "width": 800
+        "width": 800,
+        "resizable": false,
+        "title": "Overlay control",
+        "hiddenTitle": true,
+        "titleBarStyle": "Transparent"
       }
     ]
   }
