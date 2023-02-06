@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^1.2.0",
+    "firebase": "9.17.1",
     "lucide-svelte": "0.109.0",
     "tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store",
     "uuid": "9.0.0"
