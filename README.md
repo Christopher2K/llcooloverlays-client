@@ -1,8 +1,7 @@
-# Svelte-Kit + Vite
+# Overlay Control
 
-This template should help get you started developing with Tauri and Svelte-Kit in Vite.
+Desktop application to control the data displayed in [these webpages](https://github.com/Christopher2K/llcooloverlays),
 
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer).
-
+## TODO
+- [ ] Use API instead of Firebase direct access
+- [ ] Code signing
