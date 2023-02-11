@@ -10,18 +10,17 @@
 <script lang="ts">
   import { fade, fly } from 'svelte/transition';
   import { createEventDispatcher } from 'svelte';
-  import { X } from 'lucide-svelte';
+  import { XCircle } from 'lucide-svelte';
 
   const dispatch = createEventDispatcher<{ close: string }>();
 
-  export let id: string;
   export let type: 'success' | 'error';
   export let message: string;
 
   $: bgClass = bgColorByType[type];
 
   function closeSnackbar() {
-    dispatch('close', id);
+    dispatch('close');
   }
 </script>
 
@@ -31,7 +30,7 @@
   out:fade={{ duration: 200 }}
 >
   <header class="absolute top-2 left-2 right-2 flex row justify-end">
-    <button class="text-white" on:click={closeSnackbar}><X /></button>
+    <button class="text-white" on:click={closeSnackbar}><XCircle /></button>
   </header>
   <p class="text-white font-semibold">{message}</p>
 </div>
