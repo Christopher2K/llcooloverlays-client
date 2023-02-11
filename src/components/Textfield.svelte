@@ -1,16 +1,13 @@
 <script lang="ts">
+  import Label from './Label.svelte';
+  import Input from './Input.svelte';
+
   export let name: string;
   export let label: string;
   export let value: string;
 </script>
 
-<fieldset class="w-full mb-5">
-  <label class="inline-block w-full text-l font-medium mb-3" for={name}>{label}</label>
-  <input
-    autocapitalize="false"
-    class="w-80 px-2 py-2 rounded-md border border-neutral-400"
-    {name}
-    type="text"
-    bind:value
-  />
+<fieldset class="w-full mb-5 flex flex-col justify-start items-start">
+  <Label {label} {name} />
+  <Input bind:value {name} />
 </fieldset>

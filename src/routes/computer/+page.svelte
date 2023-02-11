@@ -6,7 +6,6 @@
   import Button from '@app/components/Button.svelte';
   import Textfield from '@app/components/Textfield.svelte';
   import { computerConfigurationStore } from '@app/models/computer';
-  import { settingsStore } from '@app/models/settings';
   import { snackbarStore } from '@app/models/ui';
 
   let titleValue: string;
@@ -15,12 +14,8 @@
   let computerConfigurationStoreUnsubscribe: Unsubscriber;
 
   $: ready = !$computerConfigurationStore.initializing;
-  $: apiUrl = $settingsStore?.apiUrl;
-  $: secretKey = $settingsStore?.apiSecretKey;
 
   async function onSubmit() {
-    if (!apiUrl || !secretKey) return; // Should show an error snackbar
-
     await computerConfigurationStore.updateConfiguration({
       title: titleValue,
       informations: informationsValue,
