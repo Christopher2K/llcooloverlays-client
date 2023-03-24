@@ -5,8 +5,10 @@ import { persistentStore } from '@app/persistentStore';
 const STORE_KEY = 'settings';
 
 export type Settings = {
-  apiUrl: string;
-  apiSecretKey: string;
+  pocketbaseUsername: string;
+  pocketbasePassword: string;
+  pocketbaseUrl: string;
+  pocketbaseConfigurationId: string;
 };
 
 export const settingsStore = readable<Partial<Settings> | null | undefined>(undefined, (set) => {

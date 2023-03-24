@@ -8,18 +8,25 @@
   import SecureTextfield from '@app/components/SecureTextfield.svelte';
   import { type Settings, settingsStore, setSettings } from '@app/models/settings';
   import { snackbarStore } from '@app/models/ui';
+  import { authenticatedPbStore } from '@app/models/pocketbase';
 
-  let apiUrlValue: string;
-  let apiSecretKeyValue: string;
+  let pocketbaseUrl: string;
+  let pocketbaseUsername: string;
+  let pocketbasePassword: string;
+  let pocketbaseConfigurationId: string;
 
   let settingsStoreUnsubscribe: Unsubscriber;
 
   $: ready = $settingsStore !== undefined;
+  $: connectedToPb = $authenticatedPbStore != null;
+  $: connectionToPbStatusText = connectedToPb ? 'Connected' : 'Disconnected';
 
   async function onSubmit() {
     const newSettings: Settings = {
-      apiUrl: apiUrlValue,
-      apiSecretKey: apiSecretKeyValue,
+      pocketbaseUrl,
+      pocketbasePassword,
+      pocketbaseUsername,
+      pocketbaseConfigurationId,
     };
 
     // TODO: In app notifications system?
@@ -38,8 +45,10 @@
   onMount(() => {
     settingsStoreUnsubscribe = settingsStore.subscribe((initialSettingsValue) => {
       if (initialSettingsValue !== undefined) {
-        apiUrlValue = initialSettingsValue?.apiUrl ?? '';
-        apiSecretKeyValue = initialSettingsValue?.apiSecretKey ?? '';
+        pocketbaseConfigurationId = initialSettingsValue?.pocketbaseConfigurationId ?? '';
+        pocketbaseUsername = initialSettingsValue?.pocketbaseUsername ?? '';
+        pocketbasePassword = initialSettingsValue?.pocketbasePassword ?? '';
+        pocketbaseUrl = initialSettingsValue?.pocketbaseUrl ?? '';
         ready = true;
       }
     });
@@ -48,9 +57,34 @@
 
 {#if ready}
   <Container class="" title="Settings">
+    <div class="flex flex-row justify-start items-center gap-2 mb-5">
+      <p>
+        <span class="font-bold underline">Connection status</span>
+        {connectionToPbStatusText}
+      </p>
+      <div
+        class="w-5 h-5 rounded-full"
+        class:bg-red-500={!connectedToPb}
+        class:bg-green-500={connectedToPb}
+      />
+    </div>
     <form on:submit|preventDefault={onSubmit}>
-      <Textfield name="apiUrl" bind:value={apiUrlValue} label="API URL" />
-      <SecureTextfield name="apiSecretKey" bind:value={apiSecretKeyValue} label="API Secret Key" />
+      <Textfield name="pocketbaseUrl" bind:value={pocketbaseUrl} label="Pocketbase URL" />
+      <Textfield
+        name="pocketbaseUsername"
+        bind:value={pocketbaseUsername}
+        label="Pocketbase email"
+      />
+      <SecureTextfield
+        name="pocketbasePassword"
+        bind:value={pocketbasePassword}
+        label="Pocketbase password"
+      />
+      <Textfield
+        name="configurationId"
+        bind:value={pocketbaseConfigurationId}
+        label="Configuration ID"
+      />
       <Button type="submit" label="Update" />
     </form>
   </Container>
