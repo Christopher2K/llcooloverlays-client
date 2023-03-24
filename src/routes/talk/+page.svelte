@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { v4 as uuidV4 } from 'uuid';
 
   import { configurationStore, COLLECTION_NAME } from '@app/models/configuration';
@@ -15,6 +15,7 @@
   let guestsValue: Record<string, string>;
 
   let initialized: boolean = false;
+  let unsubFromOnMount: () => void;
 
   $: ready =
     $configurationStore?.talk != null &&
@@ -22,8 +23,12 @@
     $settingsStore?.pocketbaseConfigurationId &&
     initialized;
 
+  $: if (unsubFromOnMount) {
+    unsubFromOnMount();
+  }
+
   onMount(() => {
-    let unsub = configurationStore.subscribe((configuration) => {
+    unsubFromOnMount = configurationStore.subscribe((configuration) => {
       if (configuration == null) return;
       titleValue = configuration.talk.title ?? '';
       guestsValue = (configuration.talk.guests ?? [{ name: '' }]).reduce(
@@ -34,9 +39,10 @@
         {},
       );
       initialized = true;
-      unsub()
     });
   });
+
+  onDestroy(() => unsubFromOnMount());
 
   async function onFormSubmit() {
     if ($authenticatedPbStore == null || $settingsStore?.pocketbaseConfigurationId == null) return;
