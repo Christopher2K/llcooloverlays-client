@@ -1,34 +1,43 @@
 import type Pocketbase from 'pocketbase';
-import { writable } from 'svelte/store';
+import { derived, type Readable } from 'svelte/store';
 
 import type { TalkConfiguration } from './talk';
 import type { ComputerConfiguration } from './computer';
 
-const COLLECTION_NAME = 'configuration';
+import { authenticatedPbStore } from './pocketbase';
+import { settingsStore, type Settings } from './settings';
+
+export const COLLECTION_NAME = 'configuration';
 
 export type Configuration = {
   computer: ComputerConfiguration;
   talk: TalkConfiguration;
 };
 
-export let configurationStore: ReturnType<typeof createConfigurationStore>
+export const configurationStore = derived<
+  [Readable<Pocketbase | null>, Readable<Partial<Settings> | null | undefined>],
+  Configuration | null
+>(
+  [authenticatedPbStore, settingsStore],
+  ([pb, settings], set) => {
+    if (!pb || !settings?.pocketbaseConfigurationId) {
+      set(null);
+      return;
+    }
 
-function createConfigurationStore({ pb, recordId }: { pb: Pocketbase; recordId: string }) {
-  const { subscribe, set } = writable<Configuration | null>(null);
 
-  pb.collection(COLLECTION_NAME)
-    .getOne(recordId)
-    .then((record) => {
-      set(record.content);
-    });
+    pb.collection(COLLECTION_NAME)
+      .getOne(settings.pocketbaseConfigurationId)
+      .then((data) => set(data.content as Configuration))
+      .catch(console.error);
 
-  pb.collection(COLLECTION_NAME).subscribe(recordId, ({ record }) => {
-    set(record.content);
-  });
+    pb.collection(COLLECTION_NAME)
+      .subscribe(settings.pocketbaseConfigurationId, (data) => {
+        set(data.record.content as Configuration);
+      })
+      .catch(console.error);
 
-  return {
-    subscribe,
-    updateTalk: () => {},
-    updateComputer: () => {},
-  };
-}
+    return () => pb.collection(COLLECTION_NAME).unsubscribe(settings.pocketbaseConfigurationId);
+  },
+  null,
+);

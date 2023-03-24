@@ -29,7 +29,6 @@
       pocketbaseConfigurationId,
     };
 
-    // TODO: In app notifications system?
     await setSettings(newSettings);
 
     snackbarStore.add({

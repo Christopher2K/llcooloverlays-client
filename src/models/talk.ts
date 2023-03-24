@@ -4,3 +4,4 @@ export type TalkConfiguration = {
     name: string;
   }[];
 };
+
