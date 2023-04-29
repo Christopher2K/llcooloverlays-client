@@ -3,7 +3,7 @@
   import { v4 as uuidV4 } from 'uuid';
 
   import { configurationStore, COLLECTION_NAME } from '@app/models/configuration';
-  import { authenticatedPbStore } from '@app/models/pocketbase';
+  import { pbStore } from '@app/models/pocketbase';
   import Container from '@app/components/Container.svelte';
   import Textfield from '@app/components/Textfield.svelte';
   import Button from '@app/components/Button.svelte';
@@ -19,13 +19,9 @@
 
   $: ready =
     $configurationStore?.talk != null &&
-    authenticatedPbStore != null &&
+    pbStore != null &&
     $settingsStore?.pocketbaseConfigurationId &&
     initialized;
-
-  $: if (unsubFromOnMount) {
-    unsubFromOnMount();
-  }
 
   onMount(() => {
     unsubFromOnMount = configurationStore.subscribe((configuration) => {
@@ -45,9 +41,9 @@
   onDestroy(() => unsubFromOnMount());
 
   async function onFormSubmit() {
-    if ($authenticatedPbStore == null || $settingsStore?.pocketbaseConfigurationId == null) return;
+    if ($pbStore == null || $settingsStore?.pocketbaseConfigurationId == null) return;
 
-    await $authenticatedPbStore
+    await $pbStore
       .collection(COLLECTION_NAME)
       .update($settingsStore.pocketbaseConfigurationId, {
         content: {

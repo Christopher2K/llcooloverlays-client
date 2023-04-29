@@ -8,7 +8,7 @@
   import SecureTextfield from '@app/components/SecureTextfield.svelte';
   import { type Settings, settingsStore, setSettings } from '@app/models/settings';
   import { snackbarStore } from '@app/models/ui';
-  import { authenticatedPbStore } from '@app/models/pocketbase';
+  import { pbStore } from '@app/models/pocketbase';
 
   let pocketbaseUrl: string;
   let pocketbaseUsername: string;
@@ -18,7 +18,7 @@
   let settingsStoreUnsubscribe: Unsubscriber;
 
   $: ready = $settingsStore !== undefined;
-  $: connectedToPb = $authenticatedPbStore != null;
+  $: connectedToPb = $pbStore != null;
   $: connectionToPbStatusText = connectedToPb ? 'Connected' : 'Disconnected';
 
   async function onSubmit() {

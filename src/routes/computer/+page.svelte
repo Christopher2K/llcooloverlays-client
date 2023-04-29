@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
 
   import { configurationStore, COLLECTION_NAME } from '@app/models/configuration';
-  import { authenticatedPbStore } from '@app/models/pocketbase';
+  import { pbStore } from '@app/models/pocketbase';
   import Container from '@app/components/Container.svelte';
   import Textfield from '@app/components/Textfield.svelte';
   import Button from '@app/components/Button.svelte';
@@ -17,10 +17,9 @@
 
   $: ready =
     $configurationStore?.computer != null &&
-    authenticatedPbStore != null &&
+    pbStore != null &&
     $settingsStore?.pocketbaseConfigurationId &&
     initialized;
-
 
   onMount(() => {
     unsubFromOnMount = configurationStore.subscribe((configuration) => {
@@ -31,22 +30,20 @@
     });
   });
 
-  onDestroy(() => unsubFromOnMount())
+  onDestroy(() => unsubFromOnMount());
 
   async function onFormSubmit() {
-    if ($authenticatedPbStore == null || $settingsStore?.pocketbaseConfigurationId == null) return;
+    if ($pbStore == null || $settingsStore?.pocketbaseConfigurationId == null) return;
 
-    await $authenticatedPbStore
-      .collection(COLLECTION_NAME)
-      .update($settingsStore.pocketbaseConfigurationId, {
-        content: {
-          ...$configurationStore,
-          computer: {
-            title: titleValue,
-            informations: informationsValue,
-          },
+    await $pbStore.collection(COLLECTION_NAME).update($settingsStore.pocketbaseConfigurationId, {
+      content: {
+        ...$configurationStore,
+        computer: {
+          title: titleValue,
+          informations: informationsValue,
         },
-      });
+      },
+    });
 
     snackbarStore.add({
       type: 'success',
@@ -55,8 +52,8 @@
   }
 </script>
 
-{#if ready}
-  <Container class="" title="Computer overlay">
+<Container class="" title="Computer overlay">
+  {#if ready}
     <h2 class="mb-5 text-xl font-medium">Text displayed</h2>
     <hr class="my-5" />
     <form on:submit|preventDefault={onFormSubmit}>
@@ -64,5 +61,5 @@
       <Textfield name="informations" bind:value={informationsValue} label="Informations" />
       <Button type="submit" label="Update" />
     </form>
-  </Container>
-{/if}
+  {/if}
+</Container>
