@@ -12,6 +12,7 @@ export const COLLECTION_NAME = 'configuration';
 export type Configuration = {
   computer: ComputerConfiguration;
   talk: TalkConfiguration;
+  guests: number
 };
 
 export const configurationStore = derived<

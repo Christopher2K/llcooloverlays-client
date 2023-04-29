@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { Laptop, Mic, Cog } from 'lucide-svelte';
+  import { Laptop, Mic, Cog, PersonStanding } from 'lucide-svelte';
 
   import NavItem from './NavItem.svelte';
 </script>
@@ -14,6 +14,13 @@
       label="Computer overlay"
       href="/computer"
       icon={Laptop}
+      currentPath={$page.url.pathname}
+    />
+
+    <NavItem
+      label="Computer w/ guests"
+      href="/computer-guests"
+      icon={PersonStanding}
       currentPath={$page.url.pathname}
     />
 

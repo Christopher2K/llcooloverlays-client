@@ -6,7 +6,7 @@
   export let icon: typeof Plus;
   export let currentPath: string;
 
-  $: active = currentPath.startsWith(href);
+  $: active = currentPath === href;
 </script>
 
 <li class="rounded-lg self-stretch " class:bg-blue-100={active}>
